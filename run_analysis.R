@@ -21,12 +21,12 @@ feats.names = gsub('-mean', 'Mean', feats.names)
 feats.names = gsub('-std', 'Std', feats.names)
 feats.names <- gsub('[-()]', '', feats.names)
 
-train <- read.table("UCI HAR Dataset/train/X_train.txt")[featuresWanted]
+train <- read.table("UCI HAR Dataset/train/X_train.txt")[feats]
 trainactive <- read.table("UCI HAR Dataset/train/Y_train.txt")
 trainsubject <- read.table("UCI HAR Dataset/train/subject_train.txt")
 train <- cbind(trainsubject, trainactive, train)
 
-test <- read.table("UCI HAR Dataset/test/X_test.txt")[featuresWanted]
+test <- read.table("UCI HAR Dataset/test/X_test.txt")[feats]
 testactive <- read.table("UCI HAR Dataset/test/Y_test.txt")
 testsubject <- read.table("UCI HAR Dataset/test/subject_test.txt")
 test <- cbind(testsubject, testactive, test)
@@ -34,7 +34,7 @@ test <- cbind(testsubject, testactive, test)
 allData <- rbind(train, test)
 colnames(allData) <- c("subject", "activity", feats.names)
 
-allData$activity <- factor(allData$activity, levels = activityLabels[,1], labels = activityLabels[,2])
+allData$activity <- factor(allData$activity, levels = labels[,1], labels = labels[,2])
 allData$subject <- as.factor(allData$subject)
 
 allmelted <- melt(allData, id = c("subject", "activity"))
